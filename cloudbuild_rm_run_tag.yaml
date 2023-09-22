@@ -1,0 +1,22 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    args:
+      - run
+      - services
+      - update-traffic
+      - $_SERVICE_NAME
+      - '--platform=managed'
+      - '--region=$_DEPLOY_REGION'
+      - '--remove-tags=$_BRANCH_NAME'
+      - '--quiet'
+    id: RemoveCloudRunTag
+    entrypoint: gcloud
+options:
+  substitutionOption: ALLOW_LOOSE
+substitutions:
+  _SERVICE_NAME: demo-backend-api
+  _DEPLOY_REGION: asia-northeast1
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed
+  - demo-backend-api

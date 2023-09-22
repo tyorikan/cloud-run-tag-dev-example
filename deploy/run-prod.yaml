@@ -1,0 +1,10 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: demo-backend-api-prod
+spec:
+  template:
+    spec:
+      containers:
+      - image: demo-backend-api
+      serviceAccountName: demo-backend-api # from-param: ${service_account}

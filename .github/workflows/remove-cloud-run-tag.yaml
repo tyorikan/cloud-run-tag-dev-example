@@ -1,0 +1,26 @@
+name: Trigger Cloud Build on branch deletion
+
+on:
+  delete:
+    branches:
+      - '**'
+
+permissions:
+  id-token: write
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Workload Identity Federation
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          workload_identity_provider: projects/${{ secrets.GCP_PROJECT_ID }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider
+          service_account: ${{ secrets.GCP_SA_ID }}
+
+      - name: Trigger Cloud Build
+        run: |
+          gcloud builds triggers run demo-backend-api-remove-cloud-run-tag --region=asia-northeast1 --substitutions=_BRANCH_NAME="${{ github.event.ref }}"
