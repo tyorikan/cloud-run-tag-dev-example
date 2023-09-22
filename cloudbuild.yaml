@@ -6,9 +6,9 @@ steps:
       - '-t'
       - >-
         $_AR_HOSTNAME/$PROJECT_ID/cloud-run-source-deploy/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
-      - 99-examples/demo-appdev-tag-env/backend
+      - .
       - '-f'
-      - 99-examples/demo-appdev-tag-env/backend/Dockerfile
+      - Dockerfile
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:
@@ -48,7 +48,7 @@ steps:
       - deploy
       - apply
       - '--region=$_DEPLOY_REGION'
-      - '--file=99-examples/demo-appdev-tag-env/backend/deploy/clouddeploy.yaml'
+      - '--file=deploy/clouddeploy.yaml'
     id: ApplyCloudDeployDeliveryPipeline
     entrypoint: gcloud
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
@@ -59,7 +59,7 @@ steps:
       - release-$SHORT_SHA
       - '--region=$_DEPLOY_REGION'
       - '--delivery-pipeline=demo-backend-api'
-      - '--skaffold-file=99-examples/demo-appdev-tag-env/backend/deploy/skaffold.yaml'
+      - '--skaffold-file=deploy/skaffold.yaml'
       - >-
         --images=demo-backend-api=$_AR_HOSTNAME/$PROJECT_ID/cloud-run-source-deploy/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
     id: CreateCloudDeployRelease
