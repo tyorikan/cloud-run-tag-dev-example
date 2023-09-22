@@ -1,6 +1,6 @@
-# Backend
+# Cloud Run Tag Dev Example
 
 ## Launch API
 ```
-go run main.go api
+go run cmd/api/main.go
 ```
