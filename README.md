@@ -6,14 +6,14 @@ go run cmd/api/main.go
 ```
 
 ## Cloud Build pipelines
-* cloudbuild.yaml  
-main ブランチに push されたら実行
-
-* cloudbuild_pr.yaml  
+1. cloudbuild_pr.yaml（no-traffic で Cloud Run デプロイ & タグ発行）  
 PR が作成されたら実行
 
-* cloudbuild_rm_run_tag.yaml  
-Branch が削除されたら実行（GitHub Actions からの呼び出し）
+2. cloudbuild_rm_run_tag.yaml  
+Branch が削除されたら実行（GitHub Actions から Cloud Build を呼び出し、タグ削除）
+
+3. cloudbuild.yaml  
+main ブランチに push されたら実行（Cloud Run へのデプロイ via Cloud Deploy）
 
 ## Setup
 
@@ -36,5 +36,3 @@ Cloud Deploy オペレーター
 Cloud Run 管理者
 サービス アカウント ユーザー
 ```
-
-test
