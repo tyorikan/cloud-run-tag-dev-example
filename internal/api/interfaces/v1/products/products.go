@@ -3,6 +3,7 @@ package v1
 import (
 	"backend/internal/api/interfaces/helper"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/sirupsen/logrus"
@@ -21,6 +22,7 @@ func NewProductResources() *ProductResources {
 func (rs ProductResources) Routes() chi.Router {
 	r := chi.NewRouter()
 	r.With().Get("/", rs.list)
+	r.With().Get("/slow", rs.listSlow)
 	r.With().Get("/{productId}", rs.getDetail)
 	return r
 }
@@ -43,6 +45,11 @@ func (rs ProductResources) list(w http.ResponseWriter, r *http.Request) {
 	}
 	logrus.Debug(products)
 	helper.Succeed(w, products)
+}
+
+func (rs ProductResources) listSlow(w http.ResponseWriter, r *http.Request) {
+	time.Sleep(5 * time.Second)
+	rs.list(w, r)
 }
 
 func (rs ProductResources) getDetail(w http.ResponseWriter, r *http.Request) {
