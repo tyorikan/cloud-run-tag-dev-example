@@ -7,7 +7,6 @@ spec:
     metadata:
       annotations:
         autoscaling.knative.dev/minScale: "0"   # 最小スケール数
-        autoscaling.knative.dev/target: "100"   # 同時に処理できるリクエストの最大数
     spec:
       containers:
       - image: demo-backend-api
@@ -18,4 +17,5 @@ spec:
             cpu: "1000m"
             memory: "512Mi"
       serviceAccountName: demo-backend-api # from-param: ${service_account}
+      containerConcurrency: 100 # # 同時に処理できるリクエストの最大数
       timeoutSeconds: 300 # リクエストのタイムアウト時間（秒）
