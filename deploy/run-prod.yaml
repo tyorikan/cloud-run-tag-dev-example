@@ -4,7 +4,21 @@ metadata:
   name: demo-backend-api-prod
 spec:
   template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"   # 最小スケール数
+        autoscaling.knative.dev/target: "100"   # 同時に処理できるリクエストの最大数
     spec:
       containers:
       - image: demo-backend-api
-      serviceAccountName: demo-backend-api # from-param: ${service_account}
+        ports:
+        - containerPort: 8080 # コンテナのポート
+        resources:
+          requests:
+            cpu: "1000m"
+            memory: "512Mi"
+          limits:
+            cpu: "2000m"
+            memory: "1Gi"
+      serviceAccountName: demo-backend-api-prod # from-param: ${service_account}
+      timeoutSeconds: 300 # リクエストのタイムアウト時間（秒）
