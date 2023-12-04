@@ -14,11 +14,8 @@ spec:
         ports:
         - containerPort: 8080 # コンテナのポート
         resources:
-          requests:
+          limits:
             cpu: "1000m"
             memory: "512Mi"
-          limits:
-            cpu: "2000m"
-            memory: "1Gi"
       serviceAccountName: demo-backend-api-prod # from-param: ${service_account}
       timeoutSeconds: 300 # リクエストのタイムアウト時間（秒）
