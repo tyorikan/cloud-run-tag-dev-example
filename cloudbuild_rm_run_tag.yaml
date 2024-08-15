@@ -4,7 +4,7 @@ steps:
       - run
       - services
       - update-traffic
-      - $_SERVICE_NAME
+      - ${_SERVICE_NAME}_dev
       - '--platform=managed'
       - '--region=$_DEPLOY_REGION'
       - '--remove-tags=$_BRANCH_NAME'
