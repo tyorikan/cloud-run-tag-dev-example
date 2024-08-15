@@ -21,7 +21,7 @@ steps:
       - run
       - services
       - update
-      - $_SERVICE_NAME
+      - ${_SERVICE_NAME}-dev
       - '--platform=managed'
       - >-
         --image=$_AR_HOSTNAME/$PROJECT_ID/cloud-run-source-deploy/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
@@ -39,6 +39,7 @@ images:
     $_AR_HOSTNAME/$PROJECT_ID/cloud-run-source-deploy/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
 options:
   substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _PLATFORM: managed
   _SERVICE_NAME: demo-backend-api
