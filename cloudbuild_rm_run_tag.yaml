@@ -13,6 +13,7 @@ steps:
     entrypoint: gcloud
 options:
   substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _SERVICE_NAME: demo-backend-api
   _DEPLOY_REGION: asia-northeast1
