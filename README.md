@@ -14,7 +14,7 @@ PR が作成されたら実行
 Branch が削除されたら実行（GitHub Actions から Cloud Build を呼び出し、タグ削除）
 
 3. cloudbuild.yaml  
-main ブランチに push されたら実行（Cloud Run へのデプロイ via Cloud Deploy）
+main ブランチに merge (or push) されたら実行（Cloud Run へのデプロイ via Cloud Deploy）
 
 ## Setup
 
