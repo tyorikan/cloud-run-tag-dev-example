@@ -8,7 +8,7 @@ export GITHUB_ACCOUNT={自身の GitHub アカウント}
 
 ## API の有効化
 ```bash
-gcloud services enable artifactregistry.googleapis.com run.googleapis.com cloudbuild.googleapis.com clouddeploy.googleapis.com compute.googleapis.com iam.googleapis.com
+gcloud services enable artifactregistry.googleapis.com run.googleapis.com cloudbuild.googleapis.com clouddeploy.googleapis.com compute.googleapis.com iam.googleapis.com iamcredentials.googleapis.com cloudresourcemanager.googleapis.com sts.googleapis.com secretmanager.googleapis.com
 ```
 
 ## IAM の準備
@@ -24,12 +24,12 @@ gcloud iam service-accounts create demo-backend-api
 ### Role の付与
 1. Cloud Deploy で利用するデフォルト SA
 ```bash
-gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/clouddeploy.jobrunner
+gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/clouddeploy.jobRunner
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/clouddeploy.releaser
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/run.developer
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/iam.serviceAccountUser
 ```
-2. Cloud Build で利用する　SA
+2. Cloud Build で利用する SA
 ```bash
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/cloudbuild.builds.builder
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/clouddeploy.operator
@@ -143,8 +143,8 @@ gcloud builds triggers import --source=./rm-tag-trigger.yaml --region asia-north
 gcloud config set run/region asia-northeast1
 gcloud config set run/platform managed
 
-gcloud run deploy demo-backend-api-dev --image=us-docker.pkg.dev/cloudrun/container/hello --allow-unauthenticated
-gcloud run deploy demo-backend-api-prod --image=us-docker.pkg.dev/cloudrun/container/hello --allow-unauthenticated
+gcloud run deploy demo-backend-api-dev --image=us-docker.pkg.dev/cloudrun/container/hello --allow-unauthenticated --service-account=demo-backend-api@${PROJECT_ID}.iam.gserviceaccount.com
+gcloud run deploy demo-backend-api-prod --image=us-docker.pkg.dev/cloudrun/container/hello --allow-unauthenticated --service-account=demo-backend-api@${PROJECT_ID}.iam.gserviceaccount.com
 ```
 
 ## 試してみる
