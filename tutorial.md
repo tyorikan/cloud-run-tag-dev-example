@@ -40,7 +40,11 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud
 ## GitHub の準備
 1. このリポジトリを自分のアカウント以下に Fork
 https://github.com/tyorikan/cloud-run-tag-dev-example
-2. Secrets の設定 
+2. [clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正してコミットしておく
+```bash
+sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clouddeploy.yaml
+```
+3. Secrets の設定 
 Settings -> Secrets and variables -> Actions 画面で、Variables タブの選択
 
 | Name | Value |
