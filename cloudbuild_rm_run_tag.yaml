@@ -4,7 +4,7 @@ steps:
       - run
       - services
       - update-traffic
-      - $_SERVICE_NAME
+      - ${_SERVICE_NAME}-dev
       - '--platform=managed'
       - '--region=$_DEPLOY_REGION'
       - '--remove-tags=$_BRANCH_NAME'
@@ -13,6 +13,7 @@ steps:
     entrypoint: gcloud
 options:
   substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _SERVICE_NAME: demo-backend-api
   _DEPLOY_REGION: asia-northeast1
