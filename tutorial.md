@@ -71,6 +71,13 @@ gcloud iam service-accounts add-iam-policy-binding cloud-build-runner@${PROJECT_
     --member="principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository_owner/${GITHUB_ACCOUNT}"
 ```
 
+## Artifact Registry リポジトリの作成
+```bash
+gcloud artifacts repositories create cloud-run-source-deploy \
+    --repository-format=docker \
+    --location=asia-northeast1
+```
+
 ## Cloud Build の準備
 1. Cloud Build -> リポジトリ -> ホスト接続を作成、で GitHub と接続
 2. Cloud Build -> リポジトリ -> リポジトリをリンク、から Fork したリポジトリをリンク
